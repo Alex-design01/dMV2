@@ -28,41 +28,68 @@ class ProductWidget extends StatelessWidget {
   }
 }
 
-class BottomSheetDescription extends StatelessWidget {
+class BottomSheetDescription extends StatefulWidget {
   final Product product;
   const BottomSheetDescription({Key? key, required this.product})
       : super(key: key);
 
   @override
+  State<BottomSheetDescription> createState() => _BottomSheetDescriptionState();
+}
+
+int quantity = 0;
+
+class _BottomSheetDescriptionState extends State<BottomSheetDescription> {
+  @override
   Widget build(BuildContext context) {
-    return Card(
-      color: Colors.lightBlue,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(product.name),
-          Container(
-            height: 80,
-            child: Row(
-              children: [
-                Icon(Icons.add_circle_outline),
-                Container(
-                  height: 30,
-                  width: 30,
-                  child: TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Password',
-                    ),
-                  ),
-                ),
-                Icon(Icons.remove_circle_outline_sharp),
-              ],
+    return InkWell(
+      onTap: () => setState(() {
+        quantity++;
+      }),
+      child: Card(
+        color: Colors.lightBlue,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+        child: Row(
+          children: [
+            Expanded(
+              flex: 3,
+              child: Text(
+                widget.product.name,
+                style: const TextStyle(fontSize: 21),
+              ),
             ),
-          )
-        ],
+            Row(
+              children: [
+                InkWell(
+                  child: Icon(
+                    Icons.add_circle_outline,
+                  ),
+                  onTap: () {
+                    setState(() {
+                      quantity++;
+                    });
+                  },
+                ),
+                Text(
+                  quantity.toString(),
+                  style: TextStyle(fontSize: 21),
+                ),
+                InkWell(
+                  child: Icon(Icons.remove_circle_outline_sharp),
+                  onTap: () {
+                    setState(() {
+                      if (quantity == 0) {
+                        quantity = 0;
+                      } else {
+                        quantity--;
+                      }
+                    });
+                  },
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

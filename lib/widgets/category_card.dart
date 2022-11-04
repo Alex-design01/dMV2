@@ -10,7 +10,7 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      constraints: BoxConstraints(
+      constraints: const BoxConstraints(
           minHeight: 100,
           minWidth: double.infinity,
           maxHeight: double.infinity),
@@ -26,7 +26,7 @@ class CategoryCard extends StatelessWidget {
               ),
             ),
             ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemCount: products.length,
               itemBuilder: (context, index) {
