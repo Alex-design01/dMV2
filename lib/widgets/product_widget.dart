@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../objects/product.dart';
 
 class ProductWidget extends StatelessWidget {
@@ -8,89 +7,96 @@ class ProductWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? description = product.description ?? "";
     return ListTile(
-      title: Text(product.name),
-      subtitle: Text(description),
-      onTap: () => showModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return SizedBox(
-            height: 200,
-            child: Center(
-              child: SizedBox(
-                  height: 80, child: BottomSheetDescription(product: product)),
-            ),
-          );
-        },
-      ),
-    );
+        title: Text(product.name),
+        subtitle: Text(product.description),
+        onTap: () => bottomsheet(context),
+        trailing: Text(
+          "€${product.price}",
+        ));
   }
-}
 
-class BottomSheetDescription extends StatefulWidget {
-  final Product product;
-  const BottomSheetDescription({Key? key, required this.product})
-      : super(key: key);
-
-  @override
-  State<BottomSheetDescription> createState() => _BottomSheetDescriptionState();
-}
-
-int quantity = 0;
-
-class _BottomSheetDescriptionState extends State<BottomSheetDescription> {
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => setState(() {
-        quantity++;
-      }),
-      child: Card(
-        color: Colors.lightBlue,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-        child: Row(
-          children: [
-            Expanded(
-              flex: 3,
-              child: Text(
-                widget.product.name,
-                style: const TextStyle(fontSize: 21),
+  Future<dynamic> bottomsheet(BuildContext context) {
+    return showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  product.name,
+                  style: Theme.of(context).textTheme.titleLarge,
+                ),
               ),
-            ),
-            Row(
-              children: [
-                InkWell(
-                  child: Icon(
-                    Icons.add_circle_outline,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text(product.description),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: TextField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: "Anmerkungen",
                   ),
-                  onTap: () {
-                    setState(() {
-                      quantity++;
-                    });
-                  },
                 ),
-                Text(
-                  quantity.toString(),
-                  style: TextStyle(fontSize: 21),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      height: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5.0),
+                          color: Colors.lightBlue),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed: () => print("asdasd"),
+                            icon: Icon(Icons.add_circle_outline),
+                            color: Colors.white,
+                          ),
+                          Text(
+                            "1",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(color: Colors.white),
+                          ),
+                          IconButton(
+                            onPressed: () => print("asdasd"),
+                            icon: Icon(Icons.remove_circle_outline),
+                            color: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                    ButtonTheme(
+                      height: 40,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightBlue,
+                        ),
+                        onPressed: () => print("wasda"),
+                        child: Text("Hinzufügen"),
+                      ),
+                    ),
+                  ],
                 ),
-                InkWell(
-                  child: Icon(Icons.remove_circle_outline_sharp),
-                  onTap: () {
-                    setState(() {
-                      if (quantity == 0) {
-                        quantity = 0;
-                      } else {
-                        quantity--;
-                      }
-                    });
-                  },
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -7,12 +7,12 @@ import '../widgets/category_card.dart';
 
 final productListProvider = Provider<List<Product>>(
   (ref) => [
-    Product("Hauptgericht", "Wiener", "mit Pommes und Salat"),
-    Product("Desert", "Eisbecher", "1 Kugel Erdbeere und Vanille"),
-    Product("Getränk", "Cola", null),
-    Product("Hauptgericht", "Burger", "mit Pommes und Salat"),
-    Product("Desert", "Mohr im Hemd", "Kuchen mit Schokolade"),
-    Product("Getränk", "Fanta", null),
+    Product("Hauptgericht", "Wiener", "mit Pommes und Salat", "17.40"),
+    Product("Desert", "Eisbecher", "1 Kugel Erdbeere und Vanille", "17.40"),
+    Product("Getränk", "Cola", "0,5", "3.40"),
+    Product("Hauptgericht", "Burger", "mit Pommes und Salat", "14.40"),
+    Product("Desert", "Mohr im Hemd", "Kuchen mit Schokolade", "5.80"),
+    Product("Getränk", "Fanta", "0,5", "3.40"),
   ],
 );
 
@@ -45,18 +45,23 @@ class ProductScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Dynamic Menu"),
+        actions: [
+          IconButton(
+            onPressed: () => print("jellosdasd"),
+            icon: Icon(Icons.shopping_cart),
+          ),
+        ],
       ),
       body: Column(
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: 40,
+            height: 34,
             child: Searchbar(
               categorys.toList(),
             ),
           ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height - 143,
+          Expanded(
             child: ListView.builder(
               itemCount: displayList.length,
               itemBuilder: (context, index) {

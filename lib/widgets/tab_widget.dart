@@ -14,7 +14,11 @@ class TabWidget extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5), color: Colors.lightBlue),
         child: Center(
-          child: Text(name),
+          child: Text(
+            name,
+            style: const TextStyle(
+                color: Colors.white, fontWeight: FontWeight.bold),
+          ),
         ),
       ),
     );
